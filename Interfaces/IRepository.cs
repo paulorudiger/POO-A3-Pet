@@ -11,14 +11,14 @@ namespace POO_A4.Interfaces
         //   protected abstract void ValidateAdd();
         //protected abstract void ValidateDelete();
 
-        public void Add(T entity);
+        public void Add(T entity, PetDbContext dbContext);
 
-        public void Update(T entity);
+        public void Update(T entity, PetDbContext dbContext);
 
-        public void Delete(T entity);
+        public void Delete(T entity, PetDbContext dbContext);
 
-        public T GetById(int id);
+        public T GetById(int id, PetDbContext dbContext);
 
-        public IEnumerable<T> GetAll();
+        public IEnumerable<T> GetAll(PetDbContext dbContext);
     }
 }
