@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using POO_A4.Services;
 
 namespace POO_A4.Controllers
 {
-    public class AppointmentsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AppointmentsController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+
+        private readonly AppointmentService _service;
+        private readonly ILogger _logger;
+
+
     }
 }
