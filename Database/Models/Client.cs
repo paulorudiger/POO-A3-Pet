@@ -1,4 +1,4 @@
-﻿namespace POO_A4.Models
+﻿namespace POO_A3_Pet.Database.Models
 {
     public class Client
     {

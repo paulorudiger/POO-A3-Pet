@@ -1,22 +1,21 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using POO_A3_Pet.Database.Models;
+using POO_A3_Pet.Database.Repositories;
+using POO_A3_Pet.Services.Interfaces;
 using POO_A4.Database;
 using POO_A4.Interfaces;
-using POO_A4.Models;
-using System.Collections.Generic;
-using System.ComponentModel;
 
-namespace POO_A4.Services
+namespace POO_A3_Pet.Services
 {
-    public class AppointmentService : IRepository<Appointment>
+    public class AppointmentService : IAppointmentService
     {
-        private readonly PetDbContext _dbcontext;
-        private readonly IMapper _mapper;
+        private readonly IRepository<Appointment> _repository;
 
-        public AppointmentService(PetDbContext dbcontext, IMapper mapper)
+        //private readonly ILogger _logger;
+
+        public AppointmentService(PetDbContext context)
         {
-            _dbcontext = dbcontext;
-            _mapper = mapper;
+            // _service = service;
+            _repository = new AppointmentRepository(context);
         }
     }
 }

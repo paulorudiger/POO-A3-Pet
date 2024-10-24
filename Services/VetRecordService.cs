@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using POO_A3_Pet.Database.Models;
 using POO_A4.Database;
 using POO_A4.Interfaces;
-using POO_A4.Models;
 using System.Collections.Generic;
 
 namespace POO_A4.Services

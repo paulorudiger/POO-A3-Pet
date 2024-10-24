@@ -13,37 +13,14 @@ namespace POO_A4.Interfaces
         //   protected abstract void ValidateAdd();
         //protected abstract void ValidateDelete();
 
-        public void Add(T entity, PetDbContext dbContext)
-        {
-            // Posso fazer?
-            // Classe abstrata?
-            // ValidateAdd()
-            dbContext.Add(entity);
-            dbContext.SaveChanges();
-        }
+        public void Add(T entity);
 
-        public void Update(T entity, PetDbContext dbContext)
-        {
-            // ValidateUpdate
-            dbContext.Update(entity);
-            dbContext.Entry(entity).State = EntityState.Modified;
-            dbContext.SaveChanges();
-        }
+        public void Update(T entity);
 
-        public void Delete(T entity, PetDbContext dbContext)
-        {
-            // ValidateRemove
-            dbContext.Remove(entity);
-        }
+        public void Delete(T entity);
 
-        public T GetById(int id, PetDbContext dbContext)
-        {
-            return dbContext.Find<T>(id);
-        }
+        public T GetById(int id);
 
-        public IEnumerable<T> GetAll(PetDbContext dbContext)
-        {
-            return dbContext.Set<T>().ToList();
-        }
+        public IEnumerable<T> GetAll();
     }
 }
