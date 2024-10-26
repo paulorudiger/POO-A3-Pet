@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using POO_A3_Pet.Database.Models;
+using POO_A3_Pet.Services;
+using POO_A3_Pet.Services.Interfaces;
 using POO_A4.Database;
 using POO_A4.Interfaces;
 using POO_A4.Services;
@@ -12,15 +14,14 @@ namespace POO_A4.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
-        // private readonly AppointmentService _service;
-        private readonly IRepository<Appointment> _repository;
+        private readonly IAppointmentService _service;
 
         //private readonly ILogger _logger;
 
         public AppointmentsController(PetDbContext context)
         {
             // _service = service;
-            _repository = new AppointmentService(context);
+            _service = new AppointmentService(context);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace POO_A4.Controllers
         {
             try
             {
-                _repository.Add(new Appointment());
+                //  _service.Add(new Appointment());
 
                 // Logg
 
