@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace POO_A3_Pet.Database.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly PetDbContext _context;
 
