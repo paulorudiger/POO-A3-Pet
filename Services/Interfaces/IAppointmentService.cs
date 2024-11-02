@@ -8,14 +8,14 @@ namespace POO_A3_Pet.Services.Interfaces
     {
         // CRUD com parametro DTO
 
-        public void Add(AppointmentDTO dto);
+        public Appointment Add(AppointmentDTO dto);
 
-        public void Update(AppointmentDTO dto);
+        public Appointment Update(AppointmentDTO dto);
 
-        public void Delete(AppointmentDTO dto);
+        public void Delete(int id);
 
         public Appointment GetById(int id);
 
-        // public IEnumerable<T> GetAll();
+        public IEnumerable<Appointment> GetAll();
     }
 }

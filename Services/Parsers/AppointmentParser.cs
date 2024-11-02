@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using POO_A3_Pet.Database.Models;
+using POO_A3_Pet.Services.Mappers;
 using POO_A4.Services.DTOs;
 
 namespace POO_A3_Pet.Services.Parsers
@@ -8,9 +9,13 @@ namespace POO_A3_Pet.Services.Parsers
     {
         private readonly IMapper _mapper;
 
-        public AppointmentParser(IMapper mapper)
+        public AppointmentParser()
         {
-            _mapper = mapper;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AppointmentMapper>();
+            });
+            _mapper = config.CreateMapper();
         }
 
         public Appointment ParseAppointment(AppointmentDTO dto)

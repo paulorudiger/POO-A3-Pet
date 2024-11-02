@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components.Forms.Mapping;
+using Microsoft.EntityFrameworkCore;
 using POO_A3_Pet.Database.Models;
 using POO_A3_Pet.Database.Repositories;
 using POO_A3_Pet.Services.Interfaces;
@@ -11,6 +12,7 @@ using POO_A4.Database;
 using POO_A4.Interfaces;
 using POO_A4.Services.DTOs;
 using System;
+using System.Collections.Generic;
 
 namespace POO_A3_Pet.Services
 {
@@ -19,38 +21,72 @@ namespace POO_A3_Pet.Services
         private readonly IRepository<Appointment> _repository;
         private readonly AppointmentParser _parser;
 
-        //private readonly ILogger _logger;
-
-        public AppointmentService(PetDbContext context, AppointmentParser parser)
+        public AppointmentService(PetDbContext dbcontext)
         {
-            _parser = parser;
-            _repository = new Repository<Appointment>(context);
+            _repository = new Repository<Appointment>(dbcontext);
+            _parser = new AppointmentParser();
         }
 
-        public void Add(AppointmentDTO dto)
+        public Appointment Add(AppointmentDTO dto)
         {
-            // TODO: Ver se não está orientado a aspectos
             var validator = new AppointmentValidator();
             validator.ValidateAndThrow(dto);
 
-            var entity = _parser.ParseAppointment(dto);
+            // if consultando no BD o tipo enumerado do productType
 
+            var entity = _parser.ParseAppointment(dto);
             _repository.Add(entity);
+
+            return entity;
         }
 
-        public void Delete(AppointmentDTO dto)
+        public void Delete(int appointmentid)
         {
-            throw new System.NotImplementedException();
+            var entity = _repository.GetById(appointmentid);
+            // TODO: melhorar throw
+            if (entity == null)
+            {
+                throw new KeyNotFoundException("Appointment not found");
+            }
+
+            _repository.Delete(entity);
+        }
+
+        public IEnumerable<Appointment> GetAll()
+        {
+            return _repository.GetAll();
         }
 
         public Appointment GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var entity = _repository.GetById(id);
+            // TODO: melhorar throw
+            if (entity == null)
+            {
+                throw new KeyNotFoundException("Appointment not found");
+            }
+
+            return entity;
         }
 
-        public void Update(AppointmentDTO dto)
+        public Appointment Update(AppointmentDTO dto)
         {
-            throw new System.NotImplementedException();
+            var validator = new AppointmentValidator();
+            validator.ValidateAndThrow(dto);
+
+            var id = dto.appointmentid;
+            var existingEntity = _repository.GetById(id);
+            // TODO: melhorar throw
+            if (existingEntity == null)
+            {
+                throw new KeyNotFoundException("Appointment not found");
+            }
+
+            var updatedEntity = _parser.ParseAppointment(dto);
+            updatedEntity.appointmentid = id; // mantém o ID do registro existente // TODO: entender
+
+            _repository.Update(updatedEntity);
+            return updatedEntity;
         }
     }
 }

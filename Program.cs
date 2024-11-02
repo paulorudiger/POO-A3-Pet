@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using POO_A4.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //dbcontext
-builder.Services.AddDbContext<DbContext>();
-
+//builder.Services.AddDbContext<DbContext>();
+// Configuração do PetDbContext para uso com o banco de dados em memória
+builder.Services.AddDbContext<PetDbContext>();
 
 var app = builder.Build();
 
