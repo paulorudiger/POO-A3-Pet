@@ -15,6 +15,6 @@ namespace POO_A3_Pet.Database.Models
         public int petid { get; set; }
 
         // nao pode ter um produto do tipo produto
-        public string productid { get; set; }
+        public int productid { get; set; }
     }
 }

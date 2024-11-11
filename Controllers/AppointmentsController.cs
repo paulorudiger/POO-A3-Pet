@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using POO_A3_Pet.Database.Models;
 using POO_A3_Pet.Domain;
 using POO_A3_Pet.Services;
 using POO_A3_Pet.Services.Interfaces;
 using POO_A4.Database;
-using POO_A4.Interfaces;
-using POO_A4.Services;
 using POO_A4.Services.DTOs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace POO_A4.Controllers
 {
@@ -31,14 +29,18 @@ namespace POO_A4.Controllers
             try
             {
                 var entity = _service.Add(body);
-                return Ok(null);
+                return Ok(entity);
             }
 
             // TODO: tratar tipos de erro com os status code corretos
-            catch (Exception E)
+            catch (InvalidDataException e)
             {
-                Logger.Warn("asdasd");
-                return BadRequest(E.Message);
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.Warn(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -53,11 +55,14 @@ namespace POO_A4.Controllers
 
                 return Ok(appointment);
             }
-            // TODO: tratar tipos de erro com os status code corretos
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
-                // log
-                return BadRequest(e.Message);
+                Logger.Warn(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -73,7 +78,7 @@ namespace POO_A4.Controllers
             catch (Exception e)
             {
                 // log
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -88,11 +93,18 @@ namespace POO_A4.Controllers
 
                 return Ok(updatedAppointment);
             }
-            // TODO: tratar tipos de erro com os status code corretos
+            catch (InvalidDataException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
-                // log
-                return BadRequest(e.Message);
+                Logger.Warn(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -106,11 +118,14 @@ namespace POO_A4.Controllers
 
                 return NoContent();
             }
-            // TODO: tratar tipos de erro com os status code corretos
+            catch (KeyNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
-                // log
-                return BadRequest(e.Message);
+                Logger.Warn(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }

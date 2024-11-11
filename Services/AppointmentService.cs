@@ -13,6 +13,7 @@ using POO_A4.Interfaces;
 using POO_A4.Services.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace POO_A3_Pet.Services
 {
@@ -29,6 +30,8 @@ namespace POO_A3_Pet.Services
 
         public Appointment Add(AppointmentDTO dto)
         {
+            dto.appointmentid = GetNextAppointmentidValue();
+            //    _repository.GetNextIdValue();
             var validator = new AppointmentValidator();
             validator.ValidateAndThrow(dto);
 
@@ -87,6 +90,18 @@ namespace POO_A3_Pet.Services
 
             _repository.Update(updatedEntity);
             return updatedEntity;
+        }
+
+        public int GetNextAppointmentidValue()
+        {
+            var getAll = _repository.GetAll();
+
+            // Lógica que vai controlar a PrimaryKey
+            if (!getAll.Any())
+            {
+                return 1;
+            }
+            return getAll.Max(a => a.appointmentid) + 1;
         }
     }
 }
