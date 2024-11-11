@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using POO_A3_Pet.Database.Models;
+﻿using POO_A3_Pet.Database.Models;
 using POO_A3_Pet.Database.Repositories;
 using POO_A3_Pet.Services.Interfaces;
-using POO_A3_Pet.Services.Parsers;
 using POO_A4.Database;
 using POO_A4.Interfaces;
 using POO_A4.Services.DTOs;

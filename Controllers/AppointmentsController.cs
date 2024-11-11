@@ -66,7 +66,7 @@ namespace POO_A4.Controllers
             }
         }
 
-        [HttpGet("/getAll")]
+        [HttpGet("/getAllAppointments")]
         public ActionResult<IEnumerable<Appointment>> GetAll()
         {
             try

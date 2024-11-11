@@ -32,8 +32,11 @@ namespace POO_A3_Pet.Services
         {
             dto.appointmentid = GetNextAppointmentidValue();
             //    _repository.GetNextIdValue();
+
             var validator = new AppointmentValidator();
-            validator.ValidateAndThrow(dto);
+
+            // TODO: descomentar após testes
+            //   validator.ValidateAndThrow(dto);
 
             // if consultando no BD o tipo enumerado do productType
 
@@ -75,6 +78,7 @@ namespace POO_A3_Pet.Services
         public Appointment Update(AppointmentDTO dto)
         {
             var validator = new AppointmentValidator();
+            // TODO: descomentar após testes
             validator.ValidateAndThrow(dto);
 
             var id = dto.appointmentid;
