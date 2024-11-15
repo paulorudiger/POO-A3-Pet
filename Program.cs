@@ -24,6 +24,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // Quando em desenvolvimento o InMomeoryDatabase vai iniciar com dados para facilitar testes.
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<PetDbContext>();
+        DbInitializer.Seed(context);
+    }
 }
 
 app.UseAuthorization();
