@@ -28,10 +28,10 @@ namespace POO_A4.Services
 
         public Pet Add(PetDTO dto)
         {
-            dto.petid = GetNextPetIdValue();
             var validator = new PetValidator();
             validator.ValidateAndThrow(dto);
 
+            dto.petid = GetNextPetIdValue();
             var entity = _parser.ParsePet(dto);
             _repository.Add(entity);
 

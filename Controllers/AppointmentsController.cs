@@ -11,6 +11,7 @@ using System.IO;
 
 namespace POO_A4.Controllers
 {
+    // Manter banhos e tosas
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentsController : ControllerBase
@@ -31,15 +32,17 @@ namespace POO_A4.Controllers
                 var entity = _service.Add(body);
                 return Ok(entity);
             }
-
-            // TODO: tratar tipos de erro com os status code corretos
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
             catch (InvalidDataException e)
             {
                 return BadRequest(e.Message);
             }
             catch (Exception e)
             {
-                Logger.Warn(e.Message);
+                Logger.Error(e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -50,8 +53,6 @@ namespace POO_A4.Controllers
             try
             {
                 var appointment = _service.GetById(id);
-                if (appointment == null)
-                    return NotFound("Appointment not found");
 
                 return Ok(appointment);
             }
@@ -74,7 +75,6 @@ namespace POO_A4.Controllers
                 var appointments = _service.GetAll();
                 return Ok(appointments);
             }
-            // TODO: tratar tipos de erro com os status code corretos
             catch (Exception e)
             {
                 Logger.Error(e.Message);
@@ -113,7 +113,6 @@ namespace POO_A4.Controllers
         {
             try
             {
-                // TODO: delete nao apaga do banco
                 _service.Delete(id);
 
                 return NoContent();

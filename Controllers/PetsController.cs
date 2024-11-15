@@ -11,6 +11,7 @@ using POO_A3_Pet.Domain;
 
 namespace POO_A4.Controllers
 {
+    // Manter bichos (Nome, raça, peso)
     [Route("api/[controller]")]
     [ApiController]
     public class PetsController : ControllerBase

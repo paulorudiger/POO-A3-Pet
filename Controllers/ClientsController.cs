@@ -32,10 +32,6 @@ namespace POO_A4.Controllers
                 var entity = _service.Add(body);
                 return Ok(entity);
             }
-            catch (InvalidDataException e)
-            {
-                return BadRequest(e.Message);
-            }
             catch (Exception e)
             {
                 Logger.Warn(e.Message);

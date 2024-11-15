@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using POO_A4.Database;
-using POO_A4.Services.Interfaces;
-using POO_A4.Services.Mappers;
 using POO_A4.Services.Validators;
 using POO_A4.Services.DTOs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using POO_A3_Pet.Database.Models;
@@ -16,6 +12,7 @@ using POO_A4.Services.Parsers;
 
 namespace POO_A4.Services
 {
+    // Manter ficha veterinária
     public class VetRecordService : IVetRecordService
     {
         private readonly IRepository<VetRecord> _repository;
@@ -29,10 +26,9 @@ namespace POO_A4.Services
 
         public VetRecord Add(VetRecordDTO dto)
         {
-            dto.vetrecordid = GetNextVetRecordIdValue();
             var validator = new VetRecordValidator();
             validator.ValidateAndThrow(dto);
-
+            dto.vetrecordid = GetNextVetRecordIdValue();
             var entity = _parser.ParseVetRecord(dto);
             _repository.Add(entity);
 

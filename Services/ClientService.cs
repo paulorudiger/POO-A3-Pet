@@ -28,10 +28,9 @@ namespace POO_A4.Services
 
         public Client Add(ClientDTO dto)
         {
-            dto.clientid = GetNextClientIdValue();
             var validator = new ClientValidator();
-            // TODO: descomentar após testes
-            //  validator.ValidateAndThrow(dto);
+            validator.ValidateAndThrow(dto);
+            dto.clientid = GetNextClientIdValue();
 
             var entity = _parser.ParseClient(dto);
             _repository.Add(entity);
@@ -69,8 +68,7 @@ namespace POO_A4.Services
         public Client Update(ClientDTO dto)
         {
             var validator = new ClientValidator();
-            // TODO: descomentar após testes
-            //validator.ValidateAndThrow(dto);
+            validator.ValidateAndThrow(dto);
 
             var id = dto.clientid;
             var existingEntity = _repository.GetById(id);

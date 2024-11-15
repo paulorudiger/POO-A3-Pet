@@ -19,7 +19,11 @@ namespace POO_A4.Database
         public DbSet<Appointment> Appointments { get; set; }
 
         public DbSet<Client> Clients { get; set; }
+
         public DbSet<Pet> Pets { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
         public DbSet<VetRecord> VetRecords { get; set; }
 
         // Configuração do banco de dados in-memory
@@ -27,7 +31,6 @@ namespace POO_A4.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // Define o banco de dados InMemory
                 optionsBuilder.UseInMemoryDatabase("PetDb");
             }
         }

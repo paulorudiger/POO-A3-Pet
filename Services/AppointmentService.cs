@@ -34,11 +34,10 @@ namespace POO_A3_Pet.Services
 
         public Appointment Add(AppointmentDTO dto)
         {
-            dto.appointmentid = GetNextAppointmentidValue();
-
             var validator = new AppointmentValidator();
-
             validator.ValidateAndThrow(dto);
+
+            dto.appointmentid = GetNextAppointmentidValue();
             // ProductService.GetById(dto.productid);
             var product = _productService.GetById(dto.productid);
 
@@ -55,23 +54,6 @@ namespace POO_A3_Pet.Services
             return entity;
         }
 
-        public void Delete(int appointmentid)
-        {
-            var entity = _repository.GetById(appointmentid);
-            // TODO: melhorar throw
-            if (entity == null)
-            {
-                throw new KeyNotFoundException("Appointment not found");
-            }
-
-            _repository.Delete(entity);
-        }
-
-        public IEnumerable<Appointment> GetAll()
-        {
-            return _repository.GetAll();
-        }
-
         public Appointment GetById(int id)
         {
             var entity = _repository.GetById(id);
@@ -83,10 +65,25 @@ namespace POO_A3_Pet.Services
             return entity;
         }
 
+        public IEnumerable<Appointment> GetAll()
+        {
+            return _repository.GetAll();
+        }
+
+        public void Delete(int appointmentid)
+        {
+            var entity = _repository.GetById(appointmentid);
+            if (entity == null)
+            {
+                throw new KeyNotFoundException("Appointment not found");
+            }
+
+            _repository.Delete(entity);
+        }
+
         public Appointment Update(AppointmentDTO dto)
         {
             var validator = new AppointmentValidator();
-            // TODO: descomentar após testes
             validator.ValidateAndThrow(dto);
 
             var id = dto.appointmentid;

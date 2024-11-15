@@ -8,7 +8,7 @@ namespace POO_A3_Pet.Database.Models
 
         public string vetName { get; set; }
 
-        public string petid { get; set; }
+        public int petid { get; set; }
 
         public string observations { get; set; }
 

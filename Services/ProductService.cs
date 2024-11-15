@@ -28,11 +28,9 @@ namespace POO_A4.Services
 
         public Product Add(ProductDTO dto)
         {
-            dto.productid = GetNextProductidValue();
-
             var validator = new ProductValidator();
             validator.ValidateAndThrow(dto);
-
+            dto.productid = GetNextProductidValue();
             var entity = _parser.ParseProduct(dto);
 
             _repository.Add(entity);
