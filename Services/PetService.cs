@@ -10,82 +10,81 @@ using System.Collections.Generic;
 using System.Linq;
 using POO_A3_Pet.Database.Models;
 using POO_A3_Pet.Database.Repositories;
-using POO_A3_Pet.Services.Interfaces;
 using POO_A4.Interfaces;
 using POO_A4.Services.Parsers;
 
 namespace POO_A4.Services
 {
-    public class VetRecordService : IVetRecordService
+    public class PetService : IPetService
     {
-        private readonly IRepository<VetRecord> _repository;
-        private readonly VetRecordParser _parser;
+        private readonly IRepository<Pet> _repository;
+        private readonly PetParser _parser;
 
-        public VetRecordService(PetDbContext dbcontext)
+        public PetService(PetDbContext dbcontext)
         {
-            _repository = new Repository<VetRecord>(dbcontext);
-            _parser = new VetRecordParser();
+            _repository = new Repository<Pet>(dbcontext);
+            _parser = new PetParser();
         }
 
-        public VetRecord Add(VetRecordDTO dto)
+        public Pet Add(PetDTO dto)
         {
-            dto.vetrecordid = GetNextVetRecordIdValue();
-            var validator = new VetRecordValidator();
+            dto.petid = GetNextPetIdValue();
+            var validator = new PetValidator();
             validator.ValidateAndThrow(dto);
 
-            var entity = _parser.ParseVetRecord(dto);
+            var entity = _parser.ParsePet(dto);
             _repository.Add(entity);
 
             return entity;
         }
 
-        public void Delete(int vetRecordId)
+        public void Delete(int petId)
         {
-            var entity = _repository.GetById(vetRecordId);
+            var entity = _repository.GetById(petId);
             if (entity == null)
             {
-                throw new KeyNotFoundException("Vet record not found");
+                throw new KeyNotFoundException("Pet not found");
             }
 
             _repository.Delete(entity);
         }
 
-        public IEnumerable<VetRecord> GetAll()
+        public IEnumerable<Pet> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public VetRecord GetById(int id)
+        public Pet GetById(int id)
         {
             var entity = _repository.GetById(id);
             if (entity == null)
             {
-                throw new KeyNotFoundException("Vet record not found");
+                throw new KeyNotFoundException("Pet not found");
             }
 
             return entity;
         }
 
-        public VetRecord Update(VetRecordDTO dto)
+        public Pet Update(PetDTO dto)
         {
-            var validator = new VetRecordValidator();
+            var validator = new PetValidator();
             validator.ValidateAndThrow(dto);
 
-            var id = dto.vetrecordid;
+            var id = dto.petid;
             var existingEntity = _repository.GetById(id);
             if (existingEntity == null)
             {
-                throw new KeyNotFoundException("Vet record not found");
+                throw new KeyNotFoundException("Pet not found");
             }
 
-            var updatedEntity = _parser.ParseVetRecord(dto);
-            updatedEntity.vetrecordid = id;
+            var updatedEntity = _parser.ParsePet(dto);
+            updatedEntity.petid = id;
 
             _repository.Update(updatedEntity);
             return updatedEntity;
         }
 
-        public int GetNextVetRecordIdValue()
+        public int GetNextPetIdValue()
         {
             var getAll = _repository.GetAll();
 
@@ -93,7 +92,7 @@ namespace POO_A4.Services
             {
                 return 1;
             }
-            return getAll.Max(v => v.vetrecordid) + 1;
+            return getAll.Max(p => p.petid) + 1;
         }
     }
 }
