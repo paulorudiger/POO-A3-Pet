@@ -24,12 +24,13 @@ namespace POO_A3_Pet.Services
     {
         private readonly IRepository<Appointment> _repository;
         private readonly AppointmentParser _parser;
-        private readonly IProductService _productService;
+        private readonly PetDbContext _dbcontext;
 
         public AppointmentService(PetDbContext dbcontext)
         {
             _repository = new Repository<Appointment>(dbcontext);
             _parser = new AppointmentParser();
+            _dbcontext = dbcontext;
         }
 
         public Appointment Add(AppointmentDTO dto)
@@ -39,7 +40,10 @@ namespace POO_A3_Pet.Services
 
             dto.appointmentid = GetNextAppointmentidValue();
             // ProductService.GetById(dto.productid);
-            var product = _productService.GetById(dto.productid);
+            ProductService productService = new ProductService(_dbcontext);
+            var product = productService.GetById(dto.productid);
+
+            //  var product = _productService.GetById(dto.productid);
 
             //Validando se o produto informado é um servico, visto que,
             //nao é possivel criar um agendamento com um produto
