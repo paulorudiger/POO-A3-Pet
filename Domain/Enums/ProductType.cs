@@ -2,7 +2,7 @@
 {
     public enum ProductType
     {
-        Servico = 0,
-        Produto = 1
+        Service = 0,
+        Product = 1
     }
 }

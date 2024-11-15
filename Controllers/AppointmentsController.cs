@@ -15,11 +15,11 @@ namespace POO_A4.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
+        // Programacao para abstracao
         private readonly IAppointmentService _service;
 
         public AppointmentsController(PetDbContext context)
         {
-            // _service = service;
             _service = new AppointmentService(context);
         }
 
@@ -61,7 +61,7 @@ namespace POO_A4.Controllers
             }
             catch (Exception e)
             {
-                Logger.Warn(e.Message);
+                Logger.Error(e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -77,7 +77,7 @@ namespace POO_A4.Controllers
             // TODO: tratar tipos de erro com os status code corretos
             catch (Exception e)
             {
-                // log
+                Logger.Error(e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -103,7 +103,7 @@ namespace POO_A4.Controllers
             }
             catch (Exception e)
             {
-                Logger.Warn(e.Message);
+                Logger.Error(e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -120,11 +120,12 @@ namespace POO_A4.Controllers
             }
             catch (KeyNotFoundException e)
             {
+                // Se não achar nenhum appointment com o id informado retorna um 404
                 return NotFound(e.Message);
             }
             catch (Exception e)
             {
-                Logger.Warn(e.Message);
+                Logger.Error(e.Message);
                 return StatusCode(500, e.Message);
             }
         }

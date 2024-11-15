@@ -16,6 +16,7 @@ namespace POO_A4.Controllers
     [ApiController]
     public class ClientsController : ControllerBase
     {
+        // Programacao para abstracao
         private readonly IClientService _service;
 
         public ClientsController(PetDbContext context)
